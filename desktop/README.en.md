@@ -1,4 +1,4 @@
-# Nasdaq QDII Monitor for Windows — v0.4.5
+# Nasdaq QDII Monitor for Windows — v0.5.0
 
 Double-click **NasdaqQDII.exe**. The program installs its private runtime, creates desktop and Start Menu shortcuts, starts a loopback-only service, and opens your default browser. Python and Node.js are included or unnecessary; no separate installation is needed. Requires Windows 10/11 x64 and the built-in .NET Framework 4.8.
 
@@ -12,7 +12,7 @@ To select an existing data home explicitly:
 .\NasdaqQDII.exe --home "D:\NasdaqMonitorData"
 ```
 
-Use **Settings → Enable / repair automatic tasks** to configure the eight current-user Windows scheduled tasks. They run at Beijing time (UTC+8): collection at login, 06:30, 06:45, 12:30; retry every 30 minutes from 07:15 to 17:15; freeze at 06:55; report preview at 07:00; funds at 09:10, 14:30, 20:30; database backup at 07:10; weekly archive on Saturdays at 12:30. Running legacy service tasks are retained. Other same-home tasks are exported to XML before replacement. Tasks owned by other data homes are refused. Reports are local previews; this program does not expose email sending.
+Use **Settings → Automatic tasks → Enable / repair automatic tasks** to configure the eight current-user Windows scheduled tasks. They run at Beijing time (UTC+8): collection at login, 06:30, 06:45, 12:30; retry every 30 minutes from 07:15 to 17:15; freeze at 06:55; report preview at 07:00; funds at 09:10, 14:30, 20:30; database backup at 07:10; weekly archive on Saturdays at 12:30. Running legacy service tasks are retained. Other same-home tasks are exported to XML before replacement. Tasks owned by other data homes are refused. Reports are local previews; this program does not expose email sending.
 
 The Windows-login checkbox controls the tray's Run registry entry. It does not remove an enabled service task. Exiting the tray does not disable scheduled collectors.
 
@@ -23,3 +23,14 @@ Database Backup uses SQLite's consistent backup API and writes to `data/backups`
 This generic package excludes downloaded market data, provider caches, personal channel confirmations, secrets, and chat content. Existing provider usage terms still apply. The dashboard remains a personal observation tool. The server listens on `127.0.0.1` and exposes read-only website routes.
 
 For port conflicts, change the port in Settings; unrelated processes are never terminated. Inspect logs and retry for startup errors. Check network/proxy settings for failed collection. Verify files against `SHA256SUMS.txt`. The executable is not code-signed.
+
+
+## Optional private remote access
+
+Open Settings → Remote access. Enter a hostname, Cloudflare account/zone IDs, Zero Trust team name and allowed mailboxes. Use an independent API token or reuse the current-user DPAPI-protected token stored by codex-web. Required permissions are Account / Cloudflare Tunnel / Edit, Account / Access: Apps and Policies / Edit, Zone / DNS / Edit and Zone / Zone / Read.
+
+Check Token validates identity and read access. Configure and enable verifies write operations, creates mailbox-only Access first, then a dedicated tunnel and proxied DNS, and checks the saved resources. The connector also requires an Access JWT. Unrelated existing resources are never taken over automatically. Partial resource identifiers are retained for a deliberate retry after permissions are repaired.
+
+Management API tokens and per-tunnel runtime tokens are distinct. Reusing the management token does not share a tunnel or modify codex-web. Credentials are stored with current-user Windows DPAPI, never in process arguments, source or release packages.
+
+The computer and tray must stay online. Pausing or exiting stops only this application's tunnel. Login startup can restore it after sign-in; changing the local port requires configuring the tunnel again. Cloud setup is deferred for this release by the local user because the existing token lacks DNS permission. Real mailbox login, tunnel recovery and access from another device have not been verified end to end.

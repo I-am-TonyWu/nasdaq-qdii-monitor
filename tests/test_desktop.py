@@ -81,7 +81,7 @@ def test_health_identifies_home_and_blank_home_is_not_filled(tmp_path):
     assert result['health']['application'] == 'nasdaq-qdii-monitor'
     assert result['health']['home_id'] == hashlib.sha256(str(tmp_path.resolve()).lower().encode()).hexdigest()[:24]
     assert result['health']['has_snapshot'] is False
-    assert result['health']['version'] == '0.4.5'
+    assert result['health']['version'] == '0.5.0'
     assert result['snapshot'] == 503
 
 

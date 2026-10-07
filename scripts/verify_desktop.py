@@ -22,10 +22,10 @@ import urllib.request
 import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
-EXE = ROOT / 'outputs/releases/NasdaqQDII-0.4.5/NasdaqQDII.exe'
+EXE = ROOT / 'outputs/releases/NasdaqQDII-0.5.0/NasdaqQDII.exe'
 PS = Path(os.environ['WINDIR']) / 'System32/WindowsPowerShell/v1.0/powershell.exe'
 CHECKS = []
-OUTPUT = ROOT / 'outputs/desktop-v045' / ('verify-' + uuid.uuid4().hex[:8])
+OUTPUT = ROOT / 'outputs/desktop-v050' / ('verify-' + uuid.uuid4().hex[:8])
 STATE = OUTPUT / '测试 状态'
 HOME = OUTPUT / '测试 数据'
 RPC_RESULT = OUTPUT / 'rpc.json'
@@ -179,7 +179,8 @@ def main():
         check('Every extracted runtime file matches SHA-256', not mismatches, {'files': len(manifest), 'bad': mismatches})
         paths = [p.relative_to(payload).as_posix() for p in payload.rglob('*') if p.is_file()]
         forbidden = [p for p in paths if p.startswith(('data/', 'logs/', 'outputs/')) or
-                     Path(p).name in ('latest.json','monitor.sqlite3','config.local.json','manual_channels.json','.env')]
+                     Path(p).name in ('latest.json','monitor.sqlite3','config.local.json','manual_channels.json','.env',
+                                      'remote.json','api-token.dat','tunnel-token.dat','cloudflare-token.dat')]
         check('Generic payload excludes data, caches, personal channel confirmations and secrets', not forbidden, forbidden)
         user_path = str(Path.home()).encode('utf-8').lower()
         private_paths = [name for name in paths if any(needle in (payload / name).read_bytes().lower()
@@ -196,6 +197,12 @@ def main():
               result.returncode == 0 and 'ISOLATED_RUNTIME_OK' in result.stdout, result.stderr)
         check('Python and package license notices retained', (payload / 'python/LICENSE.txt').exists() and
               any('licenses/' in name.lower() for name in paths))
+        cf = json.loads((payload / 'cloudflared/version.json').read_text(encoding='utf-8'))
+        check('Official cloudflared checksum and license retained',
+              hashlib.sha256((payload / 'cloudflared/cloudflared.exe').read_bytes()).hexdigest() == cf['sha256'] and
+              (payload / 'cloudflared/LICENSE').exists())
+        result = run([payload / 'cloudflared/cloudflared.exe', '--version'])
+        check('Bundled cloudflared actually executes', result.returncode == 0 and cf['version'] in result.stdout)
         port = free_port()
         host = launch(HOME, port)
         state = wait_state('ready')
@@ -207,7 +214,7 @@ def main():
         code, headers, raw = get(base, '/api/health')
         health = json.loads(raw)
         check('Actual HTTP service identifies the isolated data home and version', code == 200 and
-              health['version'] == '0.4.5' and health['home_id'] == hashlib.sha256(str(HOME).lower().encode()).hexdigest()[:24])
+              health['version'] == '0.5.0' and health['home_id'] == hashlib.sha256(str(HOME).lower().encode()).hexdigest()[:24])
         code, headers, raw = get(base, '/api/snapshot')
         snapshot = json.loads(raw)
         original = json.loads((HOME / 'data/latest.json').read_text(encoding='utf-8'))
@@ -220,7 +227,7 @@ def main():
             view = json.loads(raw)
             check(f'Forward PE {years or "all"}-year route uses actual saved history', code == 200 and
                   view.get('value') is not None, {'samples': view.get('samples'), 'keys': list(view)[:8]})
-        check('All web assets and program version are bundled', '0.4.5' in get(base, '/')[2].decode() and
+        check('All web assets and program version are bundled', '0.5.0' in get(base, '/')[2].decode() and
               all(get(base, p)[0] == 200 for p in ('/assets/app.js','/assets/style.css','/assets/vendor/chart.umd.js')))
         second = run([EXE, '--state-root', STATE, '--no-browser', '--no-shortcuts'])
         check('Second launch reuses the single instance', second.returncode == 0 and rpc('status')['servicePid'] == pid)

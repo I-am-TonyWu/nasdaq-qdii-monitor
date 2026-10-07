@@ -28,7 +28,7 @@ def index():
 @app.get('/api/health')
 def health():
     snapshot=latest()
-    return {'status':'ok','application':'nasdaq-qdii-monitor','version':'0.4.5',
+    return {'status':'ok','application':'nasdaq-qdii-monitor','version':'0.5.0',
             'home_id':hashlib.sha256(str(HOME).lower().encode('utf-8')).hexdigest()[:24],
             'has_snapshot':bool(snapshot),'readonly':True}
 

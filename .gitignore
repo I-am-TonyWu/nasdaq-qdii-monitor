@@ -15,6 +15,11 @@ config/manual_channels.json
 docs/*
 !docs/DATA_SOURCES.md
 !docs/RELEASE-v0.4.5.md
+!docs/RELEASE-v0.5.0.md
+!docs/REMOTE_ACCESS.md
+remote.json
+remote.json.previous
+secrets/
 规划历史/
 项目初期规划.md
 项目待办.md

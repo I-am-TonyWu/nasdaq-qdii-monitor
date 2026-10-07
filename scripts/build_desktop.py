@@ -10,10 +10,36 @@ import sys
 import sysconfig
 import uuid
 import zipfile
+import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '0.4.5'
+VERSION = '0.5.0'
 DEV = {'pip', 'pytest', '_pytest', 'pluggy', 'iniconfig', 'pygments'}
+CLOUDFLARED_VERSION = '2026.10.0'
+CLOUDFLARED_SHA256 = '86aee4017b26625cee8484c113558f48effa4cd47f7aa05fcf425604e5d2b23c'
+
+
+def bundle_cloudflared(payload):
+    cache = ROOT / 'vendor-cache' / ('cloudflared-' + CLOUDFLARED_VERSION)
+    cache.mkdir(parents=True, exist_ok=True)
+    executable = cache / 'cloudflared.exe'
+    if not executable.exists() or sha256(executable) != CLOUDFLARED_SHA256:
+        url = f'https://github.com/cloudflare/cloudflared/releases/download/{CLOUDFLARED_VERSION}/cloudflared-windows-amd64.exe'
+        with urllib.request.urlopen(url, timeout=60) as response, executable.open('wb') as target:
+            shutil.copyfileobj(response, target)
+    if sha256(executable) != CLOUDFLARED_SHA256:
+        raise ValueError('Official cloudflared SHA-256 mismatch')
+    license_file = cache / 'LICENSE'
+    if not license_file.exists():
+        url = f'https://raw.githubusercontent.com/cloudflare/cloudflared/{CLOUDFLARED_VERSION}/LICENSE'
+        with urllib.request.urlopen(url, timeout=30) as response:
+            license_file.write_bytes(response.read())
+    target = payload / 'cloudflared'
+    target.mkdir()
+    shutil.copy2(executable, target / 'cloudflared.exe')
+    shutil.copy2(license_file, target / 'LICENSE')
+    (target / 'version.json').write_text(json.dumps({'version': CLOUDFLARED_VERSION, 'sha256': CLOUDFLARED_SHA256,
+        'source': f'https://github.com/cloudflare/cloudflared/releases/tag/{CLOUDFLARED_VERSION}'}), encoding='utf-8')
 
 
 def sha256(path):
@@ -83,6 +109,7 @@ def main():
     (python / 'python312._pth').write_text('.\nDLLs\nLib\nLib/site-packages\n..\n', encoding='utf-8')
     for directory in ('app', 'web', 'templates'):
         copy_tree(ROOT / directory, payload / directory)
+    bundle_cloudflared(payload)
     (payload / 'config').mkdir()
     for name in ('fund_rules.json', 'source_registry.json'):
         shutil.copy2(ROOT / 'config' / name, payload / 'config' / name)
@@ -105,14 +132,17 @@ def main():
         'Dependency versions: dependencies.json. Python package notices/licenses '
         'are retained in python/Lib/site-packages, including dist-info directories. '
         'Vendored web assets retain their original license headers and notices.\n'
-        'The program uses Microsoft .NET Framework supplied with Windows.\n', encoding='utf-8')
+        'The program uses Microsoft .NET Framework supplied with Windows.\n'
+        f'Cloudflared {CLOUDFLARED_VERSION}: cloudflared/LICENSE (Apache-2.0), '
+        'official binary checksum and source: cloudflared/version.json.\n', encoding='utf-8')
     print('Testing relocated, isolated Python imports…', flush=True)
     run([python / 'python.exe', '-B', '-X', 'utf8', '-c',
          'import sys, fastapi, uvicorn, akshare, pandas, numpy, requests, bs4, curl_cffi, exchange_calendars, tzdata; '
          'assert sys.flags.isolated == 1 and sys.flags.no_site == 1; '
          'print("Private runtime import check passed: " + sys.version.split()[0])'], cwd=payload)
     files = sorted(p for p in payload.rglob('*') if p.is_file())
-    forbidden = ('config.local.json', 'manual_channels.json', '.env', 'latest.json', 'monitor.sqlite3')
+    forbidden = ('config.local.json', 'manual_channels.json', '.env', 'latest.json', 'monitor.sqlite3',
+                 'remote.json', 'api-token.dat', 'tunnel-token.dat', 'cloudflare-token.dat')
     for file in files:
         rel = file.relative_to(payload).as_posix()
         if file.name in forbidden or rel.startswith(('data/', 'logs/', 'outputs/', '.venv/')):
@@ -143,7 +173,7 @@ def compile_release(stage):
               '/reference:System.Web.Extensions.dll', '/reference:System.IO.Compression.dll',
               '/reference:System.IO.Compression.FileSystem.dll', '/reference:System.Security.dll',
               '/reference:System.Management.dll']
-    sources = [ROOT / 'desktop' / name for name in ('Runtime.cs', 'TrayApp.cs')]
+    sources = [ROOT / 'desktop' / name for name in ('Runtime.cs', 'TrayApp.cs', 'SettingsWindow.cs', 'RemoteAccess.cs')]
     assets = stage / 'BuildAssets.exe'
     run(common + ['/target:exe', '/main:NasdaqQDII.BuildAssets', f'/out:{assets}'] + sources + [ROOT / 'desktop' / 'BuildAssets.cs'])
     icon = stage / 'app.ico'

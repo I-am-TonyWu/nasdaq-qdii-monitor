@@ -16,7 +16,7 @@ using Microsoft.Win32;
 
 namespace NasdaqQDII {
     internal sealed class Options {
-        internal string StateRoot, Home, Result, Command;
+        internal string StateRoot, Home, Result, Command, RemoteConfigure;
         internal int Port = 8765;
         internal bool NoBrowser, NoShortcuts, ExtractOnly, Autostart, Isolated;
         internal static Options Parse(string[] args) {
@@ -25,6 +25,7 @@ namespace NasdaqQDII {
                 string a = args[i];
                 switch(a) {
                     case "--state-root": o.StateRoot = Path.GetFullPath(args[++i]); o.Isolated = true; break;
+                    case "--remote-configure": o.RemoteConfigure=Path.GetFullPath(args[++i]); break;
                     case "--home": o.Home = Path.GetFullPath(args[++i]); break;
                     case "--port": o.Port = Int32.Parse(args[++i]); break;
                     case "--result": o.Result = Path.GetFullPath(args[++i]); break;

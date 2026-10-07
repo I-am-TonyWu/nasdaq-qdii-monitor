@@ -1,8 +1,15 @@
 # Copy to a private local file and fill the actual tunnel id, credentials path and hostname.
-# Dashboard stays public read-only. Do not route config/data/logs or a management service.
+# Create a mailbox-only Cloudflare Access application for this exact hostname first.
+# Do not route config/data/logs or a management service. This is a PRIVATE dashboard.
 tunnel: YOUR_TUNNEL_ID
 credentials-file: C:\Users\YOUR_USER\.cloudflared\YOUR_TUNNEL_ID.json
 ingress:
   - hostname: YOUR_SUBDOMAIN.YOUR_DOMAIN
     service: http://127.0.0.1:8765
+    originRequest:
+      access:
+        required: true
+        teamName: YOUR_ZERO_TRUST_TEAM_NAME
+        audTag:
+          - YOUR_ACCESS_APPLICATION_AUDIENCE
   - service: http_status:404

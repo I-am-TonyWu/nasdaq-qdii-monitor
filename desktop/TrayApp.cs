@@ -17,8 +17,8 @@ using System.Windows.Forms;
 
 [assembly: AssemblyTitle("纳指观察")]
 [assembly: AssemblyDescription("纳斯达克与QDII本机观察程序")]
-[assembly: AssemblyVersion("0.4.5.0")]
-[assembly: AssemblyFileVersion("0.4.5.0")]
+[assembly: AssemblyVersion("0.5.0.0")]
+[assembly: AssemblyFileVersion("0.5.0.0")]
 
 namespace NasdaqQDII {
     internal static class Icons {
@@ -40,7 +40,7 @@ namespace NasdaqQDII {
         readonly NotifyIcon tray; readonly Control dispatcher=new Control(); readonly System.Windows.Forms.Timer timer;
         readonly Icon readyIcon=Icons.Make(Color.FromArgb(75,215,173)),waitingIcon=Icons.Make(Color.FromArgb(239,191,102)),errorIcon=Icons.Make(Color.FromArgb(238,112,119)),pausedIcon=Icons.Make(Color.FromArgb(162,177,188));
         readonly ToolStripMenuItem statusMenu,openMenu,startMenu,stopMenu,collectMenu,fundMenu,retryMenu,backupMenu;
-        Form panel; Label headline,detail,taskStatus; CheckBox startup; NumericUpDown port; Button portApply;
+        SettingsWindow panel; readonly RemoteRuntime remote=new RemoteRuntime();
         bool enabled=true,ready,opened,initialCollect,closing,failed; int polling;
         volatile string statusJson="{\"state\":\"starting\"}"; string state="starting",message="正在准备服务";
         internal TrayContext() {
@@ -61,7 +61,7 @@ namespace NasdaqQDII {
             Microsoft.Win32.SystemEvents.SessionEnding+=OnSessionEnding;
             Task.Run((Action)PipeLoop); UpdateUi(); Poll();
         }
-        void OnSessionEnding(object sender,Microsoft.Win32.SessionEndingEventArgs e) { closing=true; lock(serviceGate) runtime.Dispose(); }
+        void OnSessionEnding(object sender,Microsoft.Win32.SessionEndingEventArgs e) { closing=true; lock(serviceGate) runtime.Dispose(); remote.Dispose(); }
         void Poll() {
             if(closing || Interlocked.CompareExchange(ref polling,1,0)!=0) return;
             Task.Run(()=> {
@@ -72,17 +72,18 @@ namespace NasdaqQDII {
                     if(ready && !runtime.HasSnapshot) message=runtime.TaskBusy?"首次数据采集中，请等待完成":"服务已启动，尚无数据快照";
                     if(ready && !runtime.HasSnapshot && !initialCollect && !Paths.Options.Isolated) { initialCollect=true; runtime.BeginTask("collect"); }
                     Publish();
-                }} catch(Exception ex) { failed=true; ready=false; state="error"; message=ex.Message; Paths.Log("服务："+ex.Message); Publish(); }
+                } remote.Tick(ready); } catch(Exception ex) { failed=true; ready=false; state="error"; message=ex.Message; Paths.Log("服务："+ex.Message); Publish(); }
                 finally { Interlocked.Exchange(ref polling,0); if(!closing) try { dispatcher.BeginInvoke((Action)UpdateUi); } catch(InvalidOperationException) { } }
             });
         }
         void Publish() {
             statusJson=Paths.Json.Serialize(new {
-                application="nasdaq-qdii-desktop",version="0.4.5",state=state,detail=message,url=Paths.Url,
+                application="nasdaq-qdii-desktop",version="0.5.0",state=state,detail=message,url=Paths.Url,
                 home=Paths.Home,dataDirectory=Path.Combine(Paths.Home,"data"),payload=Paths.Payload,
                 servicePid=runtime.ServicePid,serviceOwned=runtime.ServicePid.HasValue,attachedExisting=runtime.Borrowed,
                 hasSnapshot=runtime.HasSnapshot,taskBusy=runtime.TaskBusy,task=runtime.TaskName,lastTask=runtime.LastTask,
                 lastExit=runtime.LastExit,lastResult=runtime.LastTaskResult,autoStart=!Paths.Options.Isolated && Startup.Enabled,
+                remoteEnabled=remote.Enabled,remoteConnected=remote.Connected,remoteStatus=remote.Status,remotePid=remote.Pid,remoteUrl="https://"+remote.Domain,
                 trayVisible=tray.Visible,updatedAt=DateTimeOffset.UtcNow.ToString("o")
             });
         }
@@ -94,9 +95,9 @@ namespace NasdaqQDII {
             openMenu.Enabled=ready; startMenu.Enabled=!enabled || failed; stopMenu.Enabled=ready && !runtime.Borrowed;
             foreach(var item in new[]{collectMenu,fundMenu,retryMenu,backupMenu}) item.Enabled=!runtime.TaskBusy;
             if(panel!=null && !panel.IsDisposed) {
-                headline.Text="纳指观察 · "+label; detail.Text=message;
-                taskStatus.Text=runtime.TaskBusy?TaskLabel(runtime.TaskName)+"，完成情况见日志":runtime.LastExit.HasValue?(TaskLabel(runtime.LastTask)+(runtime.LastExit==0?"完成":"失败（"+runtime.LastExit+"）")+"\n"+LastLine(runtime.LastTaskResult)):"采集与备份在后台运行，窗口可以关闭到托盘。";
-                portApply.Enabled=!runtime.TaskBusy; startup.Checked=!Paths.Options.Isolated && Startup.Enabled;
+                panel.Headline.Text="纳指观察 · "+label; panel.Detail.Text=message;
+                panel.TaskStatus.Text=runtime.TaskBusy?TaskLabel(runtime.TaskName)+"，完成情况见日志":runtime.LastExit.HasValue?(TaskLabel(runtime.LastTask)+(runtime.LastExit==0?"完成":"失败（"+runtime.LastExit+"）")+"\n"+LastLine(runtime.LastTaskResult)):"采集与备份在后台运行，窗口可以关闭到托盘。";
+                panel.PortApply.Enabled=!runtime.TaskBusy; panel.RemoteStatus.Text=remote.Status; panel.Startup.Checked=!Paths.Options.Isolated && Startup.Enabled;
             }
             if(ready && runtime.HasSnapshot && !opened && !Paths.Options.NoBrowser) { opened=true; OpenWeb(); }
             if(!Paths.Options.NoBrowser && ((!runtime.HasSnapshot && ready) || failed) && panel==null) ShowPanel();
@@ -105,30 +106,18 @@ namespace NasdaqQDII {
         static string TaskLabel(string command) { switch(command) { case "collect":return "全量采集";case "funds":return "基金更新";case "retry":return "定向补采";case "backup":return "数据库备份";case "install-tasks":return "自动任务配置";default:return command; } }
         void Run(string command) { if(!runtime.BeginTask(command)) { if(!Paths.Options.NoBrowser) MessageBox.Show("已有任务正在运行，请等待完成。","纳指观察"); } Publish(); UpdateUi(); }
         void Enable() { lock(serviceGate) { enabled=true;failed=false; } Poll(); }
-        void Disable() { lock(serviceGate) { enabled=false;failed=false;runtime.StopService(); } Poll(); }
+        void Disable() { remote.Stop(); lock(serviceGate) { enabled=false;failed=false;runtime.StopService(); } Poll(); }
         void OpenWeb() { try { Process.Start(new ProcessStartInfo(Paths.Url+"#overview") { UseShellExecute=true }); } catch(Exception ex) { Paths.Log("打开网站："+ex.Message); if(!Paths.Options.NoBrowser) MessageBox.Show(ex.Message,"无法打开浏览器"); } }
         static void OpenFolder(string path) { Directory.CreateDirectory(path); Process.Start(new ProcessStartInfo(path) { UseShellExecute=true }); }
-        Button MakeButton(string title,Action action,int x,int y,int width=155) { var b=new Button { Text=title,Left=x,Top=y,Width=width,Height=36,FlatStyle=FlatStyle.System }; b.Click+=(s,e)=>action(); panel.Controls.Add(b); return b; }
         void ShowPanel() {
             if(panel!=null && !panel.IsDisposed) { panel.Show();panel.Activate();return; }
-            panel=new Form { Text="纳指观察 · 设置",ClientSize=new Size(550,514),StartPosition=FormStartPosition.CenterScreen,Font=new Font("Microsoft YaHei UI",9.5f),FormBorderStyle=FormBorderStyle.FixedDialog,MaximizeBox=false,Icon=readyIcon,BackColor=Color.White };
-            headline=new Label { Left=22,Top=18,Width=500,Height=30,Font=new Font("Microsoft YaHei UI",14,FontStyle.Bold) };
-            detail=new Label { Left=22,Top=54,Width=500,Height=48 };
-            taskStatus=new Label { Left=22,Top=185,Width=500,Height=54,ForeColor=Color.FromArgb(82,103,121) };
-            panel.Controls.AddRange(new Control[]{headline,detail,taskStatus});
-            MakeButton("打开观察网站",OpenWeb,22,107,158);MakeButton("立即采集",()=>Run("collect"),193,107,158);MakeButton("更新基金",()=>Run("funds"),364,107,158);
-            MakeButton("补采未齐数据",()=>Run("retry"),22,149,158);MakeButton("备份数据库",()=>Run("backup"),193,149,158);MakeButton("查看日志",()=>OpenFolder(Paths.Logs),364,149,158);
-            var dataLabel=new Label { Left=22,Top=241,Width=500,Height=39,Text="数据位置："+Paths.Home,AutoEllipsis=true };panel.Controls.Add(dataLabel);
-            MakeButton("打开数据目录",()=>OpenFolder(Path.Combine(Paths.Home,"data")),22,284,158);
-            MakeButton("启用 / 修复自动任务",InstallTasks,193,284,329);
-            var schedule=new Label { Left=22,Top=329,Width=500,Height=56,Text="自动采集：06:30、06:45、12:30；基金：09:10、14:30、20:30\n补采：07:15–17:15每30分钟；早报07:00仅生成预览\n以上为北京时间；关闭窗口后仍在托盘运行。",ForeColor=Color.FromArgb(82,103,121) };panel.Controls.Add(schedule);
-            startup=new CheckBox { Left=22,Top=396,Width=300,Height=25,Text="登录Windows后自动启动程序",Enabled=!Paths.Options.Isolated };startup.Checked=!Paths.Options.Isolated && Startup.Enabled;
-            startup.CheckedChanged+=(s,e)=>{if(!Paths.Options.Isolated && startup.Checked!=Startup.Enabled) try { Startup.Set(startup.Checked); } catch(Exception ex) { MessageBox.Show(ex.Message,"设置失败"); }};panel.Controls.Add(startup);
-            panel.Controls.Add(new Label { Left=22,Top=443,Width=90,Height=27,Text="本机端口" });port=new NumericUpDown { Left=110,Top=439,Width=100,Minimum=1024,Maximum=65535,Value=Paths.Options.Port };panel.Controls.Add(port);
-            portApply=MakeButton("应用端口 / 重试",()=> { lock(serviceGate) { runtime.StopService();Paths.Options.Port=(int)port.Value;File.WriteAllText(Path.Combine(Paths.Root,"port.txt"),Paths.Options.Port.ToString());enabled=true;failed=false;opened=false; } Poll(); },230,435,160);
-            MakeButton("关闭到托盘",()=>panel.Close(),403,435,119);
-            panel.Controls.Add(new Label { Left=22,Top=484,Width=500,Height=22,Text="v0.4.5 · 本机只读网站 · 退出程序只停止本程序启动的服务",ForeColor=Color.FromArgb(82,103,121) });
+            panel=new SettingsWindow(OpenWeb,Run,InstallTasks,ApplyPort,()=>{remote.Stop();Poll();});panel.Icon=readyIcon;
             panel.FormClosed+=(s,e)=>panel=null;UpdateUi();panel.Show();
+        }
+        void ApplyPort(int value) {
+            remote.Stop();
+            lock(serviceGate) { runtime.StopService();Paths.Options.Port=value;File.WriteAllText(Path.Combine(Paths.Root,"port.txt"),value.ToString());enabled=true;failed=false;opened=false; }
+            Poll();
         }
         void InstallTasks() {
             if(Paths.Options.Isolated) return;
@@ -152,7 +141,8 @@ namespace NasdaqQDII {
                                 switch(cmd) {
                                     case "open":OpenWeb();accepted=true;break;case "show":ShowPanel();accepted=true;break;
                                     case "start":Enable();accepted=true;break;case "stop":Disable();accepted=true;break;
-                                    case "restart":lock(serviceGate) runtime.StopService();Enable();accepted=true;break;
+                                    case "remote-stop":var config=RemoteSettings.Load();config.Enabled=false;config.Save();remote.Stop();accepted=true;break;
+                                    case "restart":remote.Stop();lock(serviceGate) runtime.StopService();Enable();accepted=true;break;
                                     case "collect":case "funds":case "retry":case "backup":accepted=runtime.BeginTask(cmd);break;
                                     case "exit":accepted=true;dispatcher.BeginInvoke((Action)Exit);break;
                                 }
@@ -166,10 +156,10 @@ namespace NasdaqQDII {
         }
         async void Exit() {
             if(closing) return;closing=true;timer.Stop();tray.Text="纳指观察：正在退出";
-            await Task.Run(()=>{lock(serviceGate) runtime.Dispose();});tray.Visible=false;tray.Dispose();if(panel!=null) panel.Close();ExitThread();
+            await Task.Run(()=>{lock(serviceGate) runtime.Dispose(); remote.Dispose();});tray.Visible=false;tray.Dispose();if(panel!=null) panel.Close();ExitThread();
         }
         protected override void Dispose(bool disposing) {
-            if(disposing) {closing=true;timer.Dispose();lock(serviceGate) runtime.Dispose();tray.Visible=false;tray.Dispose();readyIcon.Dispose();waitingIcon.Dispose();errorIcon.Dispose();pausedIcon.Dispose();dispatcher.Dispose();Microsoft.Win32.SystemEvents.SessionEnding-=OnSessionEnding;}
+            if(disposing) {closing=true;timer.Dispose();lock(serviceGate) runtime.Dispose(); remote.Dispose();tray.Visible=false;tray.Dispose();readyIcon.Dispose();waitingIcon.Dispose();errorIcon.Dispose();pausedIcon.Dispose();dispatcher.Dispose();Microsoft.Win32.SystemEvents.SessionEnding-=OnSessionEnding;}
             base.Dispose(disposing);
         }
     }
@@ -187,13 +177,25 @@ namespace NasdaqQDII {
                 o=Options.Parse(args);Paths.Options=o;Paths.Root=o.StateRoot;
                 PipeName="NasdaqQDII-"+WindowsIdentity.GetCurrent().User.Value+"-"+Process.GetCurrentProcess().SessionId+"-"+Paths.Hash(Encoding.UTF8.GetBytes(o.StateRoot.ToLowerInvariant())).Substring(0,16);
                 if(o.Command!=null) {Result(o,Send(o.Command));return 0;}
+                if(o.RemoteConfigure!=null) {
+                    if(o.Isolated)throw new InvalidOperationException("隔离模式不修改云端配置。");
+                    Paths.Initialize(o);var requested=Paths.Json.Deserialize<RemoteSettings>(File.ReadAllText(o.RemoteConfigure,Encoding.UTF8));requested.Validate();
+                    var saved=RemoteSettings.Load();
+                    if(saved.AccessAppId.Length>0 || saved.TunnelId.Length>0) {
+                        if(saved.Domain!=requested.Domain || saved.AccountId!=requested.AccountId || saved.ZoneId!=requested.ZoneId)throw new IOException("已有远程资源属于其他配置。");
+                        requested.AccessAppId=saved.AccessAppId;requested.Audience=saved.Audience;requested.TunnelId=saved.TunnelId;requested.DnsId=saved.DnsId;
+                    }
+                    requested.Enabled=false;requested.Save();
+                    new CloudflareClient(RemoteSecrets.ApiToken(requested)).Configure(requested,text=>Paths.Log(text));
+                    Result(o,Paths.Json.Serialize(new{configured=true,domain=requested.Domain,tunnelId=requested.TunnelId,accessAppId=requested.AccessAppId}));return 0;
+                }
                 if(o.ExtractOnly) {Paths.Initialize(o);Result(o,Paths.Json.Serialize(new{payload=Paths.Payload,python=Paths.Python,home=Paths.Home,payloadId=Paths.PayloadId}));return 0;}
                 bool first;using(var mutex=new Mutex(true,"Local\\"+PipeName,out first)) {
                     if(!first) {if(!o.NoBrowser) try {Send("open");}catch{}return 0;}
                     try {
                         Paths.Initialize(o);
                         if(Array.IndexOf(args,"--port")<0 && File.Exists(Path.Combine(Paths.Root,"port.txt"))) {int saved;if(Int32.TryParse(File.ReadAllText(Path.Combine(Paths.Root,"port.txt")),out saved) && saved>=1024 && saved<=65535) o.Port=saved;}
-                        Paths.Log("程序启动 v0.4.5；数据 "+Paths.Home);
+                        Paths.Log("程序启动 v0.5.0；数据 "+Paths.Home);
                         Application.EnableVisualStyles();Application.SetCompatibleTextRenderingDefault(false);
                         using(var context=new TrayContext()) Application.Run(context);
                     } finally {mutex.ReleaseMutex();}

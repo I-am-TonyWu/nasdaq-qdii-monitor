@@ -2,11 +2,11 @@
 
 面向 Windows 的纳斯达克 100 / QDII 日常观察工具。提供本机只读网站、托盘控制、历史快照和自动采集任务。
 
-[下载 Windows 程序 v0.4.5](https://github.com/I-am-TonyWu/nasdaq-qdii-monitor/releases/tag/v0.4.5) · [English](README.en.md) · [中文使用说明](desktop/README.zh-CN.md)
+[下载 Windows 程序 v0.5.0](https://github.com/I-am-TonyWu/nasdaq-qdii-monitor/releases/tag/v0.5.0) · [English](README.en.md) · [中文使用说明](desktop/README.zh-CN.md)
 
 ## 直接使用
 
-1. 从 Releases 下载 `NasdaqQDII-0.4.5-Windows-x64.zip` 并解压。
+1. 从 Releases 下载 `NasdaqQDII-0.5.0-Windows-x64.zip` 并解压。
 2. 双击 `NasdaqQDII.exe`，首次启动会解压内置运行环境并采集数据，有快照后打开默认浏览器。
 3. 右下角托盘右键，可立即采集、更新基金、补采、备份数据库和配置自动任务。
 
@@ -33,7 +33,15 @@ Windows 10/11 x64，.NET Framework 4.8。内置 Python 运行环境，普通使�
 .\NasdaqQDII.exe --home "D:\NasdaqMonitorData"
 ```
 
-公开仓库和安装包不附带行情历史、提供方缓存、个人渠道确认、账号配置、密钥或聊天资料。[数据来源与口径](docs/DATA_SOURCES.md)说明发布方、代理序列与可得历史边界。源站的数据许可独立于程序代码，Dollar Liquidity 采集仅用于本机显示，不提供估值导出或公开分发。
+公开仓库和安装包不附带行情历史、提供方缓存、个人渠道确认、账号配置、密钥或聊天资料。[数据来源与口径](docs/DATA_SOURCES.md)说明发布方、代理序列与可得历史边界。源站的数据许可独立于程序代码，Dollar Liquidity 采集用于个人显示，不提供估值导出或公开分发。
+
+## 私人远程访问
+
+托盘 → 设置与自动任务 → **远程访问**。内置 cloudflared，可配置独立隧道、DNS 和指定邮箱的 Cloudflare Access 登录。默认域名为 `nasdaq.tonywu.link`；新安装不包含任何账户、邮箱或凭据，远程访问默认关闭。当前本机按用户选择暂缓云端配置，域名尚未启用。
+
+可以共用同一 Windows 账户下 codex-web 已加密保存的 API Token；该 Token 必须覆盖相应账户和区域，具备 Tunnel 编辑、DNS 编辑、区域读取、Access 应用与策略编辑权限。API Token 用于管理资源，各隧道的运行 Token 仍相互独立。程序不会改动 codex-web 的隧道或 Access 策略。详见[远程访问说明](docs/REMOTE_ACCESS.md)。
+
+GitHub Releases 保留 [v0.4.5](https://github.com/I-am-TonyWu/nasdaq-qdii-monitor/releases/tag/v0.4.5) 等历史版本，每次更新发布独立标签与安装包。
 
 ## 从源码运行
 
@@ -59,4 +67,4 @@ Windows自带 C# 编译器构建托盘，内嵌私有 Python 运行包。干净�
 
 实际 EXE 验证脚本 `scripts/verify_desktop.py`需要已构建 EXE 和本地快照。网页验证使用 Node.js、Playwright 和 Microsoft Edge，可通过 `NASDAQ_NODE`与 `NASDAQ_PLAYWRIGHT`指定运行路径。验证使用隔离数据、临时端口与临时任务，实际运行备份任务；不采集上游，不发送邮件。
 
-v0.4.5在本机通过99项后端测试、35项封装检查和16项网页检查。[发布记录](docs/RELEASE-v0.4.5.md)列出覆盖与尚未实测的边界。[第三方组件与数据来源](THIRD_PARTY.md)保留许可和参考说明。
+v0.5.0包含设置窗口重构与可选的 Cloudflare 私人远程访问。验证覆盖后端、实际封装、原生布局/远程保护和桌面/手机网页。[发布记录](docs/RELEASE-v0.5.0.md)列出覆盖与尚未实测的边界。[第三方组件与数据来源](THIRD_PARTY.md)保留许可和参考说明。
