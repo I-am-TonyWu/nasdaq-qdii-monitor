@@ -1,0 +1,829 @@
+{
+  "version": 1,
+  "review_date": "2026-10-06",
+  "rules": [
+    {
+      "name": "宝盈",
+      "codes": [
+        "019736",
+        "019737"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.byfunds.com",
+      "notice_ids": [
+        "AN202609241829831132"
+      ],
+      "effective_date": "2026-09-28",
+      "quota_scope": "per_share",
+      "quota_summary": "各份额单独额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 10,
+      "direct_limit": 10,
+      "status": "limited",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609241829831132",
+        "AN202609071829086210",
+        "AN202606101823409504",
+        "AN202604091821076909",
+        "AN202604021820970056",
+        "AN202603311820892199",
+        "AN202601121816930203",
+        "AN202511281789747867",
+        "AN202511101778473754",
+        "AN202510101759304219",
+        "AN202508131726541159",
+        "AN202507221713373478",
+        "AN202506271698364966",
+        "AN202506041684492165",
+        "AN202505161673624143",
+        "AN202505091669808297",
+        "AN202504081653077192",
+        "AN202503121644287546",
+        "AN202502271643572310",
+        "AN202502271643549307"
+      ]
+    },
+    {
+      "name": "建信",
+      "codes": [
+        "539001",
+        "012752",
+        "023422"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.ccbfund.cn",
+      "notice_ids": [
+        "AN202608191828132673"
+      ],
+      "effective_date": "2026-08-20",
+      "quota_scope": "per_share",
+      "quota_summary": "各份额单独额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 10,
+      "direct_limit": 10,
+      "status": "limited",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {
+        "539001": {
+          "direct_limit": 50
+        },
+        "012752": {
+          "direct_limit": 50
+        }
+      },
+      "reviewed_notice_ids": [
+        "AN202608191828132673",
+        "AN202608121827881763",
+        "AN202607091826839817",
+        "AN202602261820057584",
+        "AN202602251820025613",
+        "AN202601231818302907",
+        "AN202601091816865451",
+        "AN202511181783502391",
+        "AN202511131780339696",
+        "AN202511041774827137",
+        "AN202509271751405194",
+        "AN202509011737522399",
+        "AN202507211712748131",
+        "AN202507011700776336",
+        "AN202505281680440158",
+        "AN202502121643006354"
+      ]
+    },
+    {
+      "name": "摩根",
+      "codes": [
+        "019172",
+        "019173"
+      ],
+      "currency": "CNY",
+      "official_url": "https://am.jpmorgan.com/cn",
+      "notice_ids": [
+        "AN202607241827315717",
+        "AN202607091826843545"
+      ],
+      "effective_date": "2026-07-27",
+      "quota_scope": "per_share",
+      "quota_summary": "各份额单独额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 10,
+      "direct_limit": 10,
+      "status": "limited",
+      "limit_inclusive": true,
+      "direct_channel": "网上交易 / 摩根资产管理APP / 微信公众号 / 柜台",
+      "conditions": "7月27日全渠道限制按最新公告适用；不沿用7月10日直销300元旧上限。",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202607241827315717",
+        "AN202607091826843545",
+        "AN202606101823421439",
+        "AN202604241821541911",
+        "AN202512171802358421",
+        "AN202512101797625578",
+        "AN202512091796956938",
+        "AN202512081796311919",
+        "AN202511261788688912",
+        "AN202509301753213776",
+        "AN202509241749716173",
+        "AN202508181729814872",
+        "AN202508141727357085",
+        "AN202507311718948353",
+        "AN202507231714180238",
+        "AN202505221676803601"
+      ]
+    },
+    {
+      "name": "万家",
+      "codes": [
+        "019441",
+        "019442"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.wjasset.com",
+      "notice_ids": [
+        "AN202609281829947820",
+        "AN202609231829774454"
+      ],
+      "effective_date": "2026-09-28",
+      "quota_scope": "shared",
+      "quota_summary": "份额共用额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 10,
+      "direct_limit": 100,
+      "status": "limited",
+      "limit_inclusive": false,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "A/C合并；代销池和直销池分别按公告限制；9月28日取消总规模上限，不代表取消个人限额。",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609281829947820",
+        "AN202609231829774454",
+        "AN202609091829169340",
+        "AN202609081829134250",
+        "AN202607141826944672",
+        "AN202607091826830545",
+        "AN202606231823758304",
+        "AN202606191823686344",
+        "AN202604281821651715",
+        "AN202604111821133293",
+        "AN202511151781635682",
+        "AN202511111779094198",
+        "AN202508141727157263",
+        "AN202508021719997485",
+        "AN202507261715817147",
+        "AN202506281699023363",
+        "AN202502241643423280"
+      ]
+    },
+    {
+      "name": "华安",
+      "codes": [
+        "040046",
+        "014978"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.huaan.com.cn",
+      "notice_ids": [
+        "AN202609231829773864"
+      ],
+      "effective_date": "2026-09-24",
+      "quota_scope": "per_share",
+      "quota_summary": "各份额单独额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 5,
+      "direct_limit": 5,
+      "status": "limited",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609231829773864",
+        "AN202607211827178744",
+        "AN202512041793575251",
+        "AN202511041774775324",
+        "AN202510271769744624",
+        "AN202507151709095737",
+        "AN202507021701364742",
+        "AN202504081653074567",
+        "AN202503051644060726",
+        "AN202502111642958512",
+        "AN202501131641897499",
+        "AN202412301641463572",
+        "AN202412061641201131",
+        "AN202410231640426950",
+        "AN202407101637741080",
+        "AN202406201636698377"
+      ]
+    },
+    {
+      "name": "华泰柏瑞",
+      "codes": [
+        "019524",
+        "019525",
+        "022664"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.huatai-pb.com",
+      "notice_ids": [
+        "AN202609221829732369"
+      ],
+      "effective_date": "2026-09-22",
+      "quota_scope": "shared",
+      "quota_summary": "份额共用额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 5,
+      "direct_limit": 5,
+      "status": "limited",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "A/C/I合并计算，包含未列入观察清单的019524。",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609221829732369",
+        "AN202604231821470346",
+        "AN202511211785145867",
+        "AN202511071776457890",
+        "AN202510311772116536",
+        "AN202510291770848849",
+        "AN202510251768593992",
+        "AN202510231767120377"
+      ],
+      "scope_codes": [
+        "019524",
+        "019525",
+        "022664"
+      ]
+    },
+    {
+      "name": "南方",
+      "codes": [
+        "016452",
+        "016453",
+        "021000"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.nffund.com",
+      "notice_ids": [
+        "AN202607081826816306",
+        "AN202606171823629134"
+      ],
+      "effective_date": "2026-07-09",
+      "quota_scope": "per_share",
+      "quota_summary": "各份额单独额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 10,
+      "direct_limit": 10,
+      "status": "limited",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "每类单独计算；申购、定投、转换转入合并；I类1000元来自6月18日起规则，7月只调整A/C。",
+      "overrides": {
+        "021000": {
+          "distributor_limit": 1000,
+          "direct_limit": 1000
+        }
+      },
+      "reviewed_notice_ids": [
+        "AN202607081826816306",
+        "AN202606171823629134",
+        "AN202604081821052975",
+        "AN202512051794524996",
+        "AN202511201784706438",
+        "AN202510311772310034",
+        "AN202510201765441150",
+        "AN202509271751375290",
+        "AN202508161728416774",
+        "AN202506181692979786",
+        "AN202504251661992309",
+        "AN202501131641897542",
+        "AN202501081641847628",
+        "AN202501061641821184",
+        "AN202501021641502885",
+        "AN202411071640755506",
+        "AN202410281640529649",
+        "AN202408201639347742",
+        "AN202407111637781176",
+        "AN202404081630040231",
+        "AN202404021629374702"
+      ]
+    },
+    {
+      "name": "大成",
+      "codes": [
+        "000834",
+        "008971"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.dcfund.com.cn",
+      "notice_ids": [
+        "AN202606031823188725"
+      ],
+      "effective_date": "2026-06-04",
+      "quota_scope": "per_share",
+      "quota_summary": "各份额单独额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 10,
+      "direct_limit": 100,
+      "status": "limited",
+      "limit_inclusive": true,
+      "direct_channel": "大成基金APP / 官网 / 微信公众号 / 直销柜台",
+      "conditions": "按用户指定，各份额默认分别计算；公告未明确跨份额合并/分别，未将该默认值写成公告结论。",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202606031823188725",
+        "AN202605271822903520",
+        "AN202605201822472226",
+        "AN202605061821980381",
+        "AN202604071821035320",
+        "AN202601171818046412",
+        "AN202511131780339755",
+        "AN202510271769762538",
+        "AN202506281699113066",
+        "AN202504081653077191",
+        "AN202503131644321916",
+        "AN202501151641927995",
+        "AN202407101637741307"
+      ],
+      "scope_basis": "user_default"
+    },
+    {
+      "name": "天弘",
+      "codes": [
+        "018043",
+        "018044",
+        "022525"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.thfund.com.cn",
+      "notice_ids": [
+        "AN202609181829590491",
+        "AN202609011828848127"
+      ],
+      "effective_date": "2026-09-21",
+      "quota_scope": "per_share",
+      "quota_summary": "各份额单独额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "A/C暂停；D类仍有限额，日累计条文写“不含100元”，按小于100元保守展示。",
+      "overrides": {
+        "022525": {
+          "status": "limited",
+          "distributor_limit": 100,
+          "direct_limit": 100,
+          "limit_inclusive": false
+        }
+      },
+      "reviewed_notice_ids": [
+        "AN202609181829590491",
+        "AN202609011828848127",
+        "AN202605291822989315",
+        "AN202604071821036124",
+        "AN202603311820894376",
+        "AN202512301811106661",
+        "AN202511071776629512",
+        "AN202511061776067436",
+        "AN202509251750166840",
+        "AN202506241696590593",
+        "AN202503111644255654",
+        "AN202501081641848760",
+        "AN202412201641371613",
+        "AN202412131641287550",
+        "AN202412051641187683",
+        "AN202411181640930108",
+        "AN202411111640807031",
+        "AN202411011640657980"
+      ]
+    },
+    {
+      "name": "招商",
+      "codes": [
+        "019547",
+        "019548"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.cmfchina.com",
+      "notice_ids": [
+        "AN202609011828847866",
+        "AN202606091823377663"
+      ],
+      "effective_date": "2026-09-02",
+      "quota_scope": "per_share",
+      "quota_summary": "各份额单独额度",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": 10,
+      "direct_limit": 10,
+      "status": "limited",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "按用户指定，各份额默认分别计算；公告未明确跨份额合并/分别，未将该默认值写成公告结论。",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609011828847866",
+        "AN202607241827305125",
+        "AN202606091823377663",
+        "AN202511111779140625",
+        "AN202510141761802796",
+        "AN202508271735221696",
+        "AN202506301700200567",
+        "AN202505081669303148",
+        "AN202504301664879873",
+        "AN202504101653977859"
+      ],
+      "scope_basis": "user_default"
+    },
+    {
+      "name": "华夏",
+      "codes": [
+        "015299",
+        "015300"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.chinaamc.com",
+      "notice_ids": [
+        "AN202608071827734257"
+      ],
+      "effective_date": "2026-08-10",
+      "quota_scope": "not_applicable",
+      "quota_summary": "暂停申购",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "电子直销普通申购自8月10日暂停；定投、柜台、代销继续暂停。",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202608071827734257",
+        "AN202607311827507936",
+        "AN202607061826735870",
+        "AN202606261823871028",
+        "AN202511221785999927",
+        "AN202511151781620266",
+        "AN202510251768557150",
+        "AN202510151762369270",
+        "AN202507141708494482"
+      ]
+    },
+    {
+      "name": "博时",
+      "codes": [
+        "016055",
+        "016057",
+        "024237"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.bosera.com",
+      "notice_ids": [
+        "AN202509271751405684",
+        "AN202511181783502485"
+      ],
+      "effective_date": "2025-09-29",
+      "quota_scope": "not_applicable",
+      "quota_summary": "暂停申购",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "A/C暂停；I类公告100元，但天天当前暂停且公开官网该份额状态需再核对。",
+      "overrides": {
+        "024237": {
+          "status": "limited",
+          "quota_scope": "per_share",
+          "quota_summary": "I类独立额度",
+          "distributor_limit": 100,
+          "direct_limit": 100,
+          "effective_date": "2025-11-18"
+        }
+      },
+      "reviewed_notice_ids": [
+        "AN202511181783502485",
+        "AN202511131780384354",
+        "AN202511041774827016",
+        "AN202510281770456867",
+        "AN202509271751405684",
+        "AN202509271751405613",
+        "AN202508201730897258",
+        "AN202507301718194774",
+        "AN202507161709821401",
+        "AN202507091705603349",
+        "AN202507011700821302",
+        "AN202506101688084088",
+        "AN202505281680480429",
+        "AN202505091669851460",
+        "AN202504151656720089",
+        "AN202504151656719128",
+        "AN202412251641421719",
+        "AN202412181641339755",
+        "AN202412181641339655",
+        "AN202412051641187634",
+        "AN202410111640256289",
+        "AN202409281640089262"
+      ]
+    },
+    {
+      "name": "嘉实",
+      "codes": [
+        "016532",
+        "016533",
+        "021838"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.jsfund.cn",
+      "notice_ids": [
+        "AN202602031819507007"
+      ],
+      "effective_date": "2026-02-03",
+      "quota_scope": "not_applicable",
+      "quota_summary": "暂停申购",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202602031819507007",
+        "AN202601151817031187",
+        "AN202512231806254342",
+        "AN202511251787838881",
+        "AN202511111779112505",
+        "AN202511041774775279",
+        "AN202511011772938330",
+        "AN202510291771040473",
+        "AN202509251750114100",
+        "AN202508281735772768",
+        "AN202507231713971376",
+        "AN202507021701364684",
+        "AN202506171692369268",
+        "AN202505221676950507",
+        "AN202504161657193257",
+        "AN202503151644393940",
+        "AN202501231642470308",
+        "AN202501161641943422",
+        "AN202501071641831126",
+        "AN202412261641430143",
+        "AN202412231641390666",
+        "AN202411261641063722",
+        "AN202411141640873993",
+        "AN202408291639539728"
+      ]
+    },
+    {
+      "name": "国泰",
+      "codes": [
+        "160213"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.gtfund.com",
+      "notice_ids": [
+        "AN202609221829740223"
+      ],
+      "effective_date": "2026-09-28",
+      "quota_scope": "not_applicable",
+      "quota_summary": "暂停申购",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609221829740223",
+        "AN202609011828844748",
+        "AN202608191828132820",
+        "AN202605291823008560",
+        "AN202605261822869261",
+        "AN202605191822424450",
+        "AN202505221677038947"
+      ]
+    },
+    {
+      "name": "广发",
+      "codes": [
+        "270042",
+        "006479",
+        "021778"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.gffunds.com.cn",
+      "notice_ids": [
+        "AN202609301830015639",
+        "AN202609181829580913",
+        "AN202609101829193911"
+      ],
+      "effective_date": "2026-09-30",
+      "quota_scope": "not_applicable",
+      "quota_summary": "暂停申购",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609301830015639",
+        "AN202609181829580913",
+        "AN202609101829193911",
+        "AN202609101829193908",
+        "AN202607201827126800",
+        "AN202510301771709226",
+        "AN202510211766059441",
+        "AN202504111654532837",
+        "AN202503131644321915",
+        "AN202502271643549306",
+        "AN202502071642853836",
+        "AN202501071641831213",
+        "AN202501031641797628",
+        "AN202412161641308077"
+      ]
+    },
+    {
+      "name": "易方达",
+      "codes": [
+        "161130",
+        "012870"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.efunds.com.cn",
+      "notice_ids": [
+        "AN202603181820618456"
+      ],
+      "effective_date": "2026-03-19",
+      "quota_scope": "not_applicable",
+      "quota_summary": "暂停申购",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609011828884696",
+        "AN202606291826539801",
+        "AN202605191822446196",
+        "AN202603301820859738",
+        "AN202603181820618456",
+        "AN202511031774389358",
+        "AN202510271769985404",
+        "AN202509241749763561",
+        "AN202508151727982990"
+      ]
+    },
+    {
+      "name": "景顺长城",
+      "codes": [
+        "017091",
+        "017093",
+        "019118"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.igwfmc.com",
+      "notice_ids": [
+        "AN202609221829754483"
+      ],
+      "effective_date": "2026-09-23",
+      "quota_scope": "not_applicable",
+      "quota_summary": "暂停申购",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609221829754483",
+        "AN202609181829590439",
+        "AN202609161829443428",
+        "AN202604141821166828",
+        "AN202510271769812720",
+        "AN202506241696590561"
+      ]
+    },
+    {
+      "name": "汇添富",
+      "codes": [
+        "018966",
+        "018967",
+        "021773"
+      ],
+      "currency": "CNY",
+      "official_url": "https://www.99fund.com",
+      "notice_ids": [
+        "AN202609241829835607"
+      ],
+      "effective_date": "2026-09-24",
+      "quota_scope": "not_applicable",
+      "quota_summary": "暂停申购",
+      "methods": [
+        "普通申购",
+        "定期定额投资"
+      ],
+      "distributor_limit": null,
+      "direct_limit": null,
+      "status": "suspended",
+      "limit_inclusive": true,
+      "direct_channel": "官网 / APP / 直销柜台",
+      "conditions": "",
+      "overrides": {},
+      "reviewed_notice_ids": [
+        "AN202609241829835607",
+        "AN202609221829742553",
+        "AN202609121829300978",
+        "AN202609041828989529",
+        "AN202609031828946515",
+        "AN202609021828902483",
+        "AN202607171827041199",
+        "AN202607011826620810",
+        "AN202604171821282012",
+        "AN202604101821108923",
+        "AN202604041821021732",
+        "AN202603311820893805",
+        "AN202511131780384317",
+        "AN202511041774826881",
+        "AN202510291771094398",
+        "AN202510231767350976",
+        "AN202509021737942882",
+        "AN202507021701203448",
+        "AN202506181692805934",
+        "AN202504221660333608",
+        "AN202503051644051328",
+        "AN202501071641832400"
+      ]
+    }
+  ]
+}

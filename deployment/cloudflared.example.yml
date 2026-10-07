@@ -1,0 +1,8 @@
+# Copy to a private local file and fill the actual tunnel id, credentials path and hostname.
+# Dashboard stays public read-only. Do not route config/data/logs or a management service.
+tunnel: YOUR_TUNNEL_ID
+credentials-file: C:\Users\YOUR_USER\.cloudflared\YOUR_TUNNEL_ID.json
+ingress:
+  - hostname: YOUR_SUBDOMAIN.YOUR_DOMAIN
+    service: http://127.0.0.1:8765
+  - service: http_status:404

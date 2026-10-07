@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="纳斯达克100、NDXTMC与境内QDII渠道的每日观察面板。">
+  <title>纳斯达克与QDII · 每日观察</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preload" href="/assets/vendor/ui/inter/files/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/fund.css">
+  <link rel="stylesheet" href="/assets/valuation.css">
+  <script defer src="/assets/vendor/chart.umd.js"></script>
+  <script defer src="/assets/fund-view.js"></script>
+  <script defer src="/assets/valuation-view.js"></script>
+  <script defer src="/assets/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">跳至主要内容</a>
+<aside class="sidebar">
+  <a class="brand" href="#overview"><span class="brand-mark">N</span><span>NASDAQ<span class="brand-sub">每日观察 / QDII</span></span></a>
+  <div class="nav-label">观察工作台</div>
+  <nav aria-label="主导航">
+    <a href="#overview" data-view="overview" class="active"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="15" height="14" rx="1.5"/><path d="M2.5 7h15M8 7v10"/></svg></span>每日概览</a>
+    <a href="#valuation" data-view="valuation"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16.5h14M5 13V8M10 13V3.5M15 13V6"/></svg></span>估值与情绪</a>
+    <a href="#style" data-view="style"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 14l4-5 4 2 6-7M13 4h3.5v3.5"/></svg></span>风格与技术</a>
+    <a href="#macro" data-view="macro"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M3 10h14M10 3c3 4 3 10 0 14M10 3c-3 4-3 10 0 14"/></svg></span>黄金 · 利率</a>
+    <a href="#funds" data-view="funds"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="1.5"/><path d="M6 7h8M6 10h8M6 13h5"/></svg></span>基金与渠道</a>
+    <a href="#history" data-view="history"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 5.5v4.8l3 1.8"/></svg></span>历史记录</a>
+  </nav>
+  <span id="nav-scroll-hint" class="nav-scroll-hint" aria-hidden="true">滑动查看栏目 →</span>
+  <div class="sidebar-bottom"><span class="small-label">观察规则</span><p>长期持有<br>定投与逢低加仓研究</p><div class="version">本机版 · 0.4.5</div></div>
+</aside>
+<div class="workspace">
+  <header class="topbar"><div class="breadcrumb">市场观察 <span>/</span> <span id="crumb">每日概览</span></div><div class="top-actions"><span id="header-date"></span><button id="reload" class="button subtle" type="button">刷新快照</button></div></header>
+  <main id="main" tabindex="-1">
+    <div id="error" class="notice error" hidden role="alert"></div>
+    <div class="page-heading"><div><h1 id="page-title">每日概览</h1><p id="page-subtitle" hidden></p></div><a class="button" href="/api/report-preview" target="_blank" rel="noopener">早报预览</a></div>
+    <div id="statusbar" class="statusbar" aria-live="polite">正在读取本机快照…</div>
+    <section id="overview" class="view">
+      <div id="index-cards" class="grid three"></div>
+      <div class="grid chart-score">
+        <article class="panel price-panel"><div class="panel-heading"><div><h2>收盘走势</h2><p id="price-chart-caption">价格指数 / ETF日线</p></div><select id="price-instrument" aria-label="走势标的"><option value="NDX">纳斯达克100（NDX）</option><option value="NDXTMC">NDXTMC</option><option value="QQQ">QQQ</option></select></div><div class="chart-controls" role="group" aria-label="历史长度"><button data-range="1">1个月</button><button data-range="3" class="selected">3个月</button><button data-range="12">1年</button><button data-range="60">5年</button></div><div class="chart-box"><canvas id="price-chart" aria-label="日线收盘走势图" role="img"></canvas><div id="price-empty" class="chart-empty" hidden>该标的尚无有效收盘序列</div></div><div id="technical-inline" class="technical-strip"></div><p id="price-technical-date" class="technical-date"></p></article>
+        <article class="panel score-panel"><div class="panel-heading"><h2>综合观察分</h2></div><div class="score-display" id="score-display">—<span>/ 100</span></div><p id="score-caption">等待数据完整</p><div id="score-components"></div><div class="score-note"><div id="score-scale" class="score-scale" role="img" aria-label="综合观察分区间"><div class="score-track"><span></span><span></span><span></span><i id="score-position" hidden></i></div><div class="score-bands"><span data-score-band="caution">＜30 · 谨慎</span><span data-score-band="normal">30–＜70 · 正常</span><span data-score-band="fear">≥70 · 恐慌</span></div></div><details id="score-method" class="method-details"><summary>计算口径与判断标准</summary><p class="score-formula">0.5 × (100 − PE的5年分位)<br>+ 0.3 × VXN的3年分位<br>+ 0.2 × (100 − FGI)</p><p>条形显示标准化值，权重用于计算总分。＜30为谨慎，30–＜70为正常，≥70为恐慌；这些是尚未回测的观察区间。评分窗口固定，切换图表周期不改变评分。</p></details></div></article>
+      </div>
+      <div id="sentiment-cards" class="grid three"></div>
+      <article class="panel"><div class="panel-heading"><div><h2>有额度的基金</h2><p id="fund-overview-note"></p></div><a href="#funds" class="text-link">查看全部基金</a></div><div id="fund-preview"></div></article>
+    </section>
+<section id="valuation" class="view" hidden>
+  <article class="valuation-workbench">
+    <header class="valuation-heading"><h2>Nasdaq 100</h2></header>
+    <aside class="valuation-official-snapshot" aria-label="WSJ与Birinyi估值发布快照">
+      <div id="official-valuation-values" class="official-values"></div>
+    </aside>
+    <div class="valuation-toolbar">
+      <div class="valuation-control-group valuation-metric-group">
+        <span class="valuation-control-label">指标</span>
+        <div id="valuation-metrics" class="metric-tabs" role="group" aria-label="估值与情绪指标">
+          <button data-metric="ttm" class="selected">PE TTM</button><button data-metric="forward">Forward PE</button><button data-metric="pb">PB</button><button data-metric="VXN">VXN</button><button data-metric="VIX">VIX</button><button data-metric="FGI">CNN FGI</button>
+        </div>
+      </div>
+      <div class="valuation-control-group valuation-source-group">
+        <label class="valuation-control-label" for="valuation-dataset">图表来源</label>
+        <select id="valuation-dataset" aria-label="估值数据序列"><option value="reference">周频历史参考</option><option value="official">正式发布值</option><option value="publisher" disabled>Dollar Liquidity 直接采集</option></select>
+      </div>
+      <div class="valuation-control-group valuation-period-group">
+        <span class="valuation-control-label">区间</span>
+        <div id="valuation-periods" class="period-tabs" role="group" aria-label="共同历史区间"><button data-years="0">全部</button><button data-years="20">20年</button><button data-years="10">10年</button><button data-years="5">5年</button><button data-years="3">3年</button><button data-years="1" class="selected">1年</button></div>
+      </div>
+    </div>
+    <header class="valuation-analysis-heading"><h3 id="valuation-chart-source">图表来源</h3><p id="valuation-span"></p></header>
+    <div id="valuation-loading" class="valuation-message" role="status" hidden>正在读取所选区间…</div>
+    <p id="valuation-source-note" class="meta" hidden></p>
+    <div id="valuation-body">
+      <div id="valuation-summary" class="valuation-summary"></div>
+      <div class="valuation-charts">
+        <article class="panel">
+          <div class="panel-heading valuation-chart-heading"><h2 id="valuation-level-title">估值走势</h2><span id="valuation-level-unit" class="valuation-chart-unit"></span></div>
+          <div class="valuation-chart-meta"><span id="valuation-frequency"></span><span id="valuation-level-range"></span></div>
+          <div class="chart-box valuation-chart"><canvas id="valuation-level-chart" role="img" aria-label="当前指标历史走势"></canvas><div id="valuation-level-empty" class="chart-empty" hidden></div></div>
+          <div id="valuation-range-summary" class="valuation-chart-footer valuation-range-summary"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading valuation-chart-heading"><h2>历史分位</h2><span id="valuation-percentile-unit" class="valuation-chart-unit">单位：%</span></div>
+          <div class="valuation-chart-meta"><span id="valuation-percentile-title"></span><span id="valuation-percentile-range"></span></div>
+          <div class="chart-box valuation-chart"><canvas id="valuation-percentile-chart" role="img" aria-label="同区间历史分位走势"></canvas><div id="valuation-percentile-empty" class="chart-empty" hidden></div></div>
+          <div id="percentile-position" class="percentile-position valuation-chart-footer"></div>
+        </article>
+      </div>
+      <div class="valuation-brush"><label>起点<input id="valuation-start" type="range" min="0" max="1" value="0" aria-label="两张图共同起始日期"></label><label>终点<input id="valuation-end" type="range" min="0" max="1" value="1" aria-label="两张图共同结束日期"></label><span id="valuation-brush-dates"></span><button id="valuation-reset" class="button subtle" type="button">重置区间</button></div>
+      <article class="panel percentile-panel"><div class="panel-heading"><h2>历史分位表</h2><span id="percentile-table-label" class="meta"></span></div><div class="table-scroll"><table class="percentile-table"><thead><tr><th>区间</th><th>历史分位</th><th>最低值</th><th>最高值</th><th>样本</th><th>覆盖率</th></tr></thead><tbody id="percentile-table-body"></tbody></table></div><details class="method-details"><summary>数据与计算口径</summary><div id="valuation-method"></div></details></article>
+    </div>
+  </article>
+  <details class="panel method-details"><summary>评分口径</summary><p class="formula">C = 0.50 × (100 − 前瞻PE分位) + 0.30 × VXN分位 + 0.20 × (100 − FGI)</p><p>仅前瞻PE参与估值评分，TTM仅作参照。缺项时完整评分不可计算，不补中性分，也不放大剩余权重。前瞻PE固定采用Dollar Liquidity公布的5年分位；VXN使用本站计算的3年分位，CNN FGI使用当前值。图表的1/3/5/10/20年选择不改变评分窗口。</p><p class="meta">PE分位：源站公布；VXN分位：本站中秩经验分布（mid-rank ECDF）。方法版本 forward-publisher-5y-50-30-20-v2。观察分＜30为谨慎，30≤分数＜70为正常，≥70为恐慌；这些是初始观察区间，尚未回测。Forward PE及其5年分位来自同一源站，不拼接WSJ口径；本站图表采样覆盖不足不会阻止使用源站已公布的当前分位。</p></details>
+</section>
+
+    <section id="style" class="view" hidden>
+      <div id="technical-cards" class="grid three"></div><p id="style-technical-date" class="style-technical-date"></p>
+      <article class="panel"><div class="panel-heading"><div><h2>价值与小盘 / QQQ · ROC(35)</h2><p id="pair-caption"></p></div><span class="badge">相对表现</span></div><div class="chart-controls" role="group" aria-label="价值标的历史长度"><button data-pair-range="1">1个月</button><button data-pair-range="3" class="selected">3个月</button><button data-pair-range="12">1年</button><button data-pair-range="60">5年</button></div><div class="chart-box tall"><canvas id="pair-chart" role="img" aria-label="VTV、CGDV、可口可乐、伯克希尔A和罗素2000相对QQQ的ROC35走势"></canvas></div><div id="pair-values" class="grid pair-summary"></div><details class="method-details"><summary>指标说明</summary><p>ROC(35)＞0：价值标的近35个交易日表现强于QQQ。比值使用同日价格，不含分红再投资。罗素2000是小盘价格指数，其指数点位与QQQ价格的比值用于计算相对ROC，不代表纯价值风格。图例可切换显示标的。</p></details></article>
+    </section>
+    <section id="macro" class="view" hidden>
+      <div id="macro-cards" class="grid four"></div>
+      <article class="panel"><div class="panel-heading"><div><h2>跨资产历史</h2><p id="macro-chart-caption"></p></div><select id="macro-instrument" aria-label="跨资产指标"><option value="GOLD">黄金期货</option><option value="DGS2">美债2年</option><option value="DGS10">美债10年</option><option value="DFII10">美债10年实际利率</option></select></div><div class="chart-controls" role="group" aria-label="跨资产历史长度"><button data-macro-range="1">1个月</button><button data-macro-range="3">3个月</button><button data-macro-range="12" class="selected">1年</button><button data-macro-range="60">5年</button></div><div class="chart-box"><canvas id="macro-chart" role="img" aria-label="跨资产历史走势"></canvas></div><p id="macro-caption" class="meta"></p><details class="method-details"><summary>变化与相关性</summary><p id="macro-correlation"></p></details></article>
+    </section>
+    <section id="funds" class="view" hidden>
+      <div id="fund-stats" class="stat-strip"></div>
+      <article class="panel fund-panel"><div class="filterbar"><label class="search"><span>⌕</span><input id="fund-search" type="search" placeholder="搜索基金、代码或管理人" aria-label="搜索基金"></label><select id="fund-index" aria-label="筛选跟踪指数"><option value="all">全部指数</option><option value="NDX100">纳斯达克100（NDX）</option><option value="NDXTMC">NDXTMC</option><option value="待确认">待确认</option></select><select id="fund-state" aria-label="筛选渠道状态"><option value="all">全部状态</option><option value="open">有可买额度</option><option value="suspended">有暂停渠道</option><option value="unknown">未知 / 过期</option></select><label class="check-label"><input id="favorites-only" type="checkbox">我的自选</label><button id="export-csv" type="button" class="button subtle">导出渠道记录</button></div><div class="fund-table-head fund-columns"><span>基金 / 份额 · 金额为人民币元</span><span>代销额度</span><span>直销额度</span><span>近一年收益</span><span>费率</span><span>跟踪误差</span></div><div id="fund-list"></div><div id="fund-empty" class="empty" hidden>没有符合当前筛选的基金。</div></article>
+      <details class="method-details"><summary>额度说明</summary><p>额度是每账户的申购上限，不是剩余可售金额。概览只纳入已核验且在有效期内的渠道，按公告区分份额共用或单独额度。申购与定投合并规则、跨渠道累计范围在基金详情中查看。</p></details>
+    </section>
+    <section id="history" class="view" hidden>
+      <article class="panel history-quality"><div class="panel-heading"><h2>数据补齐</h2><span id="history-quality-summary" class="meta"></span></div><div id="issues-list"></div></article>
+      <article class="panel"><div class="panel-heading"><h2>当前数据状态</h2></div><div id="source-list"></div></article>
+      <article class="panel"><div class="panel-heading"><div><h2>当时可见的快照</h2><p>保存每次采集时的行情与渠道状态</p></div></div><div id="history-list"></div></article>
+    </section>
+    <footer><span id="snapshot-id" hidden></span></footer>
+  </main>
+</div>
+</body>
+</html>

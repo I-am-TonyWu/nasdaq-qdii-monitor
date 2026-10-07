@@ -1,0 +1,128 @@
+/* Valuation page only: source snapshots and historical analysis stay distinct. */
+#valuation .valuation-heading{margin-bottom:18px;align-items:flex-start}
+#valuation .valuation-heading h2{font-size:27px;line-height:1.3}
+#valuation .valuation-official-snapshot{margin:0 0 26px;padding:18px 22px;background:var(--slate-2);border:1px solid var(--line);border-radius:10px}
+#valuation .official-values{display:grid;grid-template-columns:minmax(160px,1.3fr) repeat(2,minmax(110px,1fr));gap:24px;align-items:center;text-align:left;justify-content:initial;font-family:var(--sans)}
+#valuation .official-values span{display:block;flex-basis:auto;text-align:left;font:400 13px/1.5 var(--sans);color:var(--muted)}
+#valuation .official-origin strong{display:block;font-size:15px;font-weight:600;margin-top:5px;color:var(--ink)}
+#valuation .official-stat{display:grid;gap:3px}
+#valuation .official-stat b{font:600 24px/1.3 var(--mono);color:var(--ink);font-variant-numeric:tabular-nums}
+#valuation .official-stat b small{font:400 14px var(--sans);margin-left:5px;color:var(--muted)}
+#valuation .official-stat time{font:400 13px/1.5 var(--mono);color:var(--muted);white-space:nowrap}
+#valuation .valuation-toolbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,280px);gap:18px 22px;align-items:end;padding-bottom:20px;margin-bottom:18px}
+#valuation .valuation-control-group{display:flex;flex-direction:column;gap:7px;min-width:0}
+#valuation .valuation-control-label{font-size:13px;font-weight:550;line-height:1.5;color:var(--muted)}
+#valuation .valuation-period-group{grid-column:1/-1}
+#valuation .valuation-toolbar:has(.valuation-source-group[hidden]) .valuation-metric-group{grid-column:1/-1}
+#valuation .metric-tabs{padding:0;background:transparent;gap:4px;flex-wrap:wrap;border-radius:0}
+#valuation .metric-tabs button,#valuation .period-tabs button,#valuation #valuation-dataset{min-height:38px;border:1px solid var(--slate-7);border-radius:7px;padding:7px 11px;font-size:14px;line-height:1.4;background:var(--white);color:var(--ink)}
+#valuation .metric-tabs button:hover,#valuation .period-tabs button:hover{background:var(--slate-3);border-color:var(--slate-8)}
+#valuation .metric-tabs button.selected,#valuation .period-tabs button.selected{background:var(--teal-4);border-color:var(--teal-7);color:var(--teal-12);font-weight:650}
+#valuation .metric-tabs button:focus-visible,#valuation .period-tabs button:focus-visible,#valuation #valuation-dataset:focus-visible,#valuation .valuation-brush button:focus-visible{outline:2px solid var(--teal-9);outline-offset:3px}
+#valuation #valuation-dataset{width:100%;margin-left:0;padding-right:30px}
+#valuation .period-tabs{gap:6px;flex-wrap:wrap;margin-left:0;justify-content:flex-start}
+#valuation .period-tabs button{min-width:58px}
+#valuation .valuation-analysis-heading{display:flex;align-items:baseline;justify-content:space-between;gap:10px 20px;margin:0 0 18px;flex-wrap:wrap}
+#valuation .valuation-analysis-heading h3{margin:0;font-size:15px;font-weight:600;line-height:1.6;color:var(--ink)}
+#valuation #valuation-span{margin:0;font:400 13px/1.6 var(--sans);color:var(--muted);overflow-wrap:anywhere}
+#valuation .valuation-message{font-size:14px;line-height:1.6;margin:0 0 14px}
+#valuation #valuation-source-note{font-size:13px;line-height:1.7;margin:0 0 16px;color:var(--muted)}
+#valuation .valuation-summary{gap:14px;margin-bottom:20px}
+#valuation .valuation-stat{padding:17px 19px}
+#valuation .valuation-stat>span{font-size:13px;line-height:1.6}
+#valuation .valuation-stat b{font-size:29px;line-height:1.35;margin-top:8px;white-space:nowrap}
+#valuation .valuation-stat b small{font:400 14px var(--sans);color:var(--muted);margin-left:5px}
+#valuation .valuation-charts{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);align-items:stretch;gap:18px}
+#valuation .valuation-charts>.panel{display:flex;flex-direction:column;padding:20px 22px;margin-bottom:0}
+#valuation .valuation-chart-heading{align-items:baseline;margin-bottom:5px}
+#valuation .valuation-chart-heading h2{font-size:16px;line-height:1.5}
+#valuation .valuation-chart-unit{font:400 13px/1.5 var(--sans);color:var(--muted);white-space:nowrap}
+#valuation .valuation-chart-meta{display:grid;gap:3px;margin-bottom:13px;color:var(--muted);font-size:13px;line-height:1.5}
+#valuation .valuation-chart-meta>span{font-size:13px}
+#valuation .valuation-chart-meta>span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#valuation .valuation-chart{height:300px;margin:0}
+#valuation .chart-empty{font-size:14px;line-height:1.75}
+#valuation #valuation-percentile-empty{inset:10px 54px 44px 12px;padding:15px}
+#valuation .valuation-chart-footer{min-height:82px;box-sizing:border-box;border-top:1px solid var(--line);padding-top:16px;margin-top:18px}
+#valuation .valuation-range-summary{display:flex;align-items:center;justify-content:space-between;gap:18px}
+#valuation .valuation-range-summary>div{display:flex;flex-direction:column;gap:6px}
+#valuation .valuation-range-summary>div:last-child{text-align:right}
+#valuation .valuation-range-summary span{font-size:13px;color:var(--muted);line-height:1.5}
+#valuation .valuation-range-summary b{font:550 20px/1.35 var(--mono);font-variant-numeric:tabular-nums}
+#valuation .valuation-range-summary small{font:400 13px var(--sans);margin-left:5px;color:var(--muted)}
+#valuation .valuation-range-summary .range-direction{color:var(--slate-9);font-size:20px}
+#valuation .percentile-position{font-size:13px;color:var(--muted)}
+#valuation .percentile-position>div:first-child{margin-bottom:11px;gap:10px}
+#valuation .percentile-position b{color:var(--ink);font:600 16px var(--mono)}
+#valuation .percentile-labels{font-size:13px;margin-top:9px}
+#valuation .valuation-brush{gap:18px;padding:14px 18px;font-size:13px;margin:18px 0 22px;background:var(--slate-2)}
+#valuation .valuation-brush label{font-size:13px;gap:10px}
+#valuation .valuation-brush input{height:38px;margin:0;min-width:65px}
+#valuation #valuation-brush-dates{font-size:13px;line-height:1.6}
+#valuation .valuation-brush .button{min-height:38px;padding:7px 12px;font-size:14px;line-height:1.4}
+#valuation .percentile-panel{padding:20px 22px}
+#valuation .percentile-panel .panel-heading{align-items:baseline;flex-wrap:wrap}
+#valuation #percentile-table-label{font-size:13px;line-height:1.6}
+#valuation .percentile-table th,#valuation .percentile-table td{padding:13px 14px;font-size:14px;line-height:1.5}
+#valuation .percentile-table small{font-size:13px;line-height:1.5;display:block;margin:3px 0 0}
+#valuation #percentile-scroll-hint{display:none;font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 10px}
+#valuation .percentile-table tr>:first-child{position:sticky;left:0;z-index:1;background:var(--white);box-shadow:1px 0 0 var(--line)}
+#valuation .percentile-table .selected-period>:first-child{background:var(--teal-3)}
+#valuation .method-details>summary{font-size:14px;line-height:1.6;padding:9px 0}
+#valuation .method-details p{font-size:14px;line-height:1.75;color:var(--muted)}
+#valuation .method-details .meta{font-size:13px}
+#valuation .method-details .formula{font-size:14px;color:var(--ink)}
+@media(max-width:1200px){
+  #valuation .valuation-toolbar{grid-template-columns:minmax(0,1fr) minmax(220px,250px);column-gap:18px}
+  #valuation .valuation-charts{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  #valuation .valuation-charts>.panel{padding:20px}
+  #valuation .valuation-stat{padding:16px}
+  #valuation .metric-tabs button{padding-left:9px;padding-right:9px}
+}
+@media(max-width:1000px){
+  #valuation .valuation-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #valuation .valuation-charts{grid-template-columns:1fr}
+  #valuation .valuation-chart{height:290px}
+}
+@media(max-width:850px){
+  #valuation .valuation-toolbar{grid-template-columns:minmax(0,1fr) minmax(210px,240px)}
+}
+@media(max-width:600px){
+  #valuation .valuation-heading h2{font-size:24px}
+  #valuation .valuation-official-snapshot{padding:16px;margin-bottom:24px}
+  #valuation .official-values{grid-template-columns:minmax(0,1.15fr) repeat(2,minmax(0,1fr));gap:12px}
+  #valuation .official-origin strong{font-size:14px;line-height:1.5}
+  #valuation .official-values span,#valuation .official-stat time{font-size:13px}
+  #valuation .official-stat b{font-size:22px}
+  #valuation .valuation-toolbar{grid-template-columns:1fr;gap:17px;padding-bottom:20px}
+  #valuation .valuation-period-group{grid-column:auto;grid-row:2}
+  #valuation .valuation-source-group{grid-row:3}
+  #valuation .metric-tabs,#valuation .period-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%}
+  #valuation .metric-tabs button,#valuation .period-tabs button,#valuation #valuation-dataset{min-height:42px;font-size:14px;padding:9px 8px}
+  #valuation #valuation-dataset{padding-right:30px}
+  #valuation .valuation-analysis-heading{display:block;margin-bottom:16px}
+  #valuation #valuation-span{margin-top:5px}
+  #valuation .valuation-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}
+  #valuation .valuation-stat{padding:14px 15px}
+  #valuation .valuation-stat b{font-size:26px;line-height:1.35}
+  #valuation .valuation-charts{gap:16px}
+  #valuation .valuation-charts>.panel{padding:18px 16px}
+  #valuation .valuation-chart{height:250px}
+  #valuation .valuation-chart-footer{min-height:82px;margin-top:17px}
+  #valuation .valuation-brush{padding:13px 14px;gap:10px 14px;align-items:center}
+  #valuation .valuation-brush label{flex:1 1 100%}
+  #valuation .valuation-brush input{min-height:42px}
+  #valuation #valuation-brush-dates{flex:1 1 100%;font-size:13px;white-space:normal}
+  #valuation .valuation-brush .button{min-height:42px;width:100%;font-size:14px}
+  #valuation .percentile-panel{padding:18px 16px}
+  #valuation .percentile-table th,#valuation .percentile-table td{font-size:13px;padding:12px 11px}
+  #valuation .percentile-table{min-width:570px}
+  #valuation #percentile-scroll-hint{display:block}
+  #valuation .percentile-labels{font-size:13px}
+  #valuation #percentile-table-label{font-size:13px}
+}
+@media(max-width:380px){
+  #valuation .official-values{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+  #valuation .official-origin{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  #valuation .official-origin strong{margin-top:0}
+}

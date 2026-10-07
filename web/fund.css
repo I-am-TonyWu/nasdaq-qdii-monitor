@@ -1,0 +1,83 @@
+/* Fund amounts share one column grid; only the product identity is indented. */
+.fund-table-head.fund-columns>span:not(:first-child),
+.fund-columns>.fund-cell,
+.fund-preview-head>span:not(:first-child),
+.fund-preview-quota{text-align:right}
+.fund-row>summary.fund-columns{padding:16px 0;font-size:14px}
+.fund-name,.share-identity strong,.fund-preview-row strong{
+  font-size:14px;font-weight:550;line-height:1.6;white-space:normal;
+  overflow-wrap:anywhere;text-wrap:pretty
+}
+.fund-name small,.share-identity .share-code,.fund-cell small,
+.quota-note,.quota-value small,.fund-preview-row small{
+  font-size:13px;line-height:1.6
+}
+.fund-cell{font-size:14px}
+.fund-cell.numeric,.quota-number{font-variant-numeric:tabular-nums}
+.quota-value{font-size:14px;line-height:1.6}
+.quota-value+.quota-value{margin-top:7px}
+.quota-reading{display:flex;justify-content:flex-end;align-items:baseline;gap:4px;flex-wrap:wrap;min-width:0}
+.quota-number{white-space:nowrap}
+.quota-note{font-family:var(--sans);color:var(--ink);margin:0}
+.quota-value .quota-evidence{margin:2px 0 0;color:var(--muted)}
+.fund-preview-row{gap:18px;padding:14px 0;align-items:start}
+.fund-preview-identity{min-width:0}
+.fund-preview-row small{margin-top:3px}
+.fund-preview-row .quota-evidence{font-size:13px}
+.fund-title{gap:8px}
+.fund-row>.share-row{
+  margin:0;padding:0;border:0;border-radius:0;background:var(--slate-2)
+}
+.fund-row>.share-row+.share-row{border-top:1px solid var(--line)}
+.share-row>summary.fund-columns{padding:12px 0;align-items:start}
+.share-row>summary .share-identity{padding-left:20px;align-items:flex-start}
+.share-identity>div{min-width:0}
+.share-identity .star{flex:0 0 30px;min-height:30px;padding:4px}
+.share-row>.method-details{margin:0 20px;padding:12px 0;border-top:1px solid var(--line)}
+.share-row>.method-details>summary{font-size:13px;line-height:1.6;min-height:24px}
+.share-information p,.channel-data,.channel-meta{font-size:13px;line-height:1.65}
+.channel-data b{font-size:14px;font-variant-numeric:tabular-nums}
+.fund-detail-hint,.fund-performance,.share-mobile-performance{display:none}
+.fund-performance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+.fund-performance-grid .fund-cell{text-align:right}
+.fund-performance-grid .fund-cell::before{content:attr(data-label);display:block;font:12px/1.6 var(--sans);color:var(--muted);margin-bottom:4px}
+
+@media(max-width:1000px){
+  .fund-row>summary.fund-columns,.share-row>summary.fund-columns{
+    grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;align-items:start
+  }
+  .fund-row>summary.fund-columns>.fund-title,
+  .share-row>summary.fund-columns>.share-identity{grid-column:1/-1;grid-row:auto}
+  .fund-columns>.performance-cell{display:none}
+  .fund-columns>.quota-cell::before{font-size:13px;margin-bottom:3px}
+  .fund-detail-hint{display:inline}
+  .fund-performance{display:block;padding:12px 0;border-top:1px solid var(--line)}
+  .fund-performance>summary{display:flex;justify-content:space-between;gap:10px;align-items:center;list-style:none;cursor:pointer;font-size:13px;min-height:26px;color:var(--ink)}
+  .fund-performance>summary::-webkit-details-marker{display:none}
+  .performance-chevron{font-size:18px;color:var(--muted)}
+  .fund-performance[open]>summary .performance-chevron{transform:rotate(90deg)}
+  .fund-performance[open]>.fund-performance-grid{padding-top:12px}
+  .share-mobile-performance{display:block;margin:0 20px;padding:12px 0;border-top:1px solid var(--line)}
+  .fund-performance-grid .fund-cell::before{font-size:13px}
+  .fund-name small,.share-identity .share-code,.fund-cell,.fund-cell small,
+  .quota-note,.quota-value small,.fund-preview-row small,.fund-preview-row .quota-evidence{font-size:13px}
+  .share-identity strong{font-size:14px}
+}
+
+@media(max-width:600px){
+  .fund-preview-head{display:none}
+  .fund-preview-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;padding:14px 0}
+  .fund-preview-row>.fund-preview-identity{grid-column:1/-1}
+  .fund-preview-row strong{font-size:14px}
+  .fund-preview-quota::before{content:attr(data-label);display:block;font:13px/1.6 var(--sans);color:var(--muted);margin-bottom:3px}
+  .fund-preview-row .quota-value,.quota-value{font-size:14px}
+  .fund-preview-row .quota-note{display:inline;font-size:13px}
+  .fund-row>summary.fund-columns{padding:14px 0}
+  .fund-name{font-size:14px}
+  .share-row>summary .share-identity{padding-left:10px}
+  .share-row>.method-details,.share-mobile-performance{margin-left:10px;margin-right:10px}
+  .fund-performance-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+  .fund-performance-grid .fund-cell{font-size:14px}
+  .fund-row>summary:focus-visible,.share-row>summary:focus-visible,
+  .fund-performance>summary:focus-visible{outline:2px solid var(--teal-8);outline-offset:3px}
+}

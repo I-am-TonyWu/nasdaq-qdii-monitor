@@ -1,0 +1,58 @@
+{
+  "@fontsource-variable/inter": {
+    "version": "5.3.0",
+    "integrity": "sha512-OupL48va4JNofb97w6NYeF9S7W/kHNKM0Er8Dem5nqi4jeOLrVJDoE8tZEpnMJmtkvNbB1EIPPwHcdkF6b1oUA==",
+    "license": "OFL-1.1",
+    "url": "https://registry.npmjs.org/@fontsource-variable/inter/-/inter-5.3.0.tgz",
+    "files": [
+      {
+        "path": "web/vendor/ui/inter/latin.css",
+        "sha256": "4b922c400b03ca2fb764157082c838242ce7552fa601edf96aaa2c628c663c5b"
+      },
+      {
+        "path": "web/vendor/ui/inter/files/inter-latin-wght-normal.woff2",
+        "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+      },
+      {
+        "path": "web/vendor/ui/inter/LICENSE",
+        "sha256": "3b0a5fca3d17942cde889069889dedbbbd075e9b599968c82a95f4d944e9b345"
+      }
+    ]
+  },
+  "@radix-ui/colors": {
+    "version": "3.0.0",
+    "integrity": "sha512-FUOsGBkHrYJwCSEtWRCIfQbZG7q1e6DgxCIOe1SUQzDe/7rXXeA47s8yCn6fuTNQAj1Zq4oTFi9Yjp3wzElcxg==",
+    "license": "MIT",
+    "url": "https://registry.npmjs.org/@radix-ui/colors/-/colors-3.0.0.tgz",
+    "files": [
+      {
+        "path": "web/vendor/ui/radix/slate.css",
+        "sha256": "bb43cc7c9d444eead943972afb8926e73878b2df5b98f06f6e8b46c6d2e662d8"
+      },
+      {
+        "path": "web/vendor/ui/radix/teal.css",
+        "sha256": "3d29355081895911aa99d4fd53cd50cf6ed1aac381341507be2d471bbedfd083"
+      },
+      {
+        "path": "web/vendor/ui/radix/blue.css",
+        "sha256": "01862cc2b3c61bc4d7724d764b919124ae83fb2b00c0aaa55bf9c7d94557459f"
+      },
+      {
+        "path": "web/vendor/ui/radix/red.css",
+        "sha256": "b6ff5723edb3161efb8e0217ee373d0d4f844f63f921f0fd88fe970754a9b7a2"
+      },
+      {
+        "path": "web/vendor/ui/radix/amber.css",
+        "sha256": "18ec7c43c6f21b3747aeecbac362ae0096dabef0a9f68095f676b57be7af6150"
+      },
+      {
+        "path": "web/vendor/ui/radix/violet.css",
+        "sha256": "9cea56f1c78c2d0c7e3050facb62f39dec761dd711cb11a09538da9435225c6f"
+      },
+      {
+        "path": "web/vendor/ui/radix/LICENSE",
+        "sha256": "9c400881b9139571aa7acc3bd6e422a4f05223b4519169fb661298fb44bf228e"
+      }
+    ]
+  }
+}

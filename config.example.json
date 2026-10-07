@@ -1,0 +1,8 @@
+{
+  "port": 8765,
+  "public_url": "",
+  "worker_url": "",
+  "worker_token_env": "NASDAQ_MAIL_TOKEN",
+  "source_timeout_seconds": 20,
+  "channel_valid_hours": 24
+}

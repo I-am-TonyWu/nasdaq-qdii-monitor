@@ -1,0 +1,122 @@
+{
+  "NDX": {
+    "publisher": "Nasdaq",
+    "upstream_group": "Nasdaq-index",
+    "method_id": "daily-price-index-close-v2",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "NDXTMC": {
+    "publisher": "Nasdaq",
+    "upstream_group": "Nasdaq-index",
+    "method_id": "daily-price-index-close-v2",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "VXN": {
+    "publisher": "Cboe",
+    "upstream_group": "Cboe-volatility-index",
+    "method_id": "daily-CLOSE-v2",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "VIX": {
+    "publisher": "Cboe",
+    "upstream_group": "Cboe-volatility-index",
+    "method_id": "daily-CLOSE-v2",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "DGS2": {
+    "publisher": "US Treasury",
+    "upstream_group": "US-Treasury-yields",
+    "method_id": "Treasury-CMT-v2",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "DGS10": {
+    "publisher": "US Treasury",
+    "upstream_group": "US-Treasury-yields",
+    "method_id": "Treasury-CMT-v2",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "DFII10": {
+    "publisher": "US Treasury",
+    "upstream_group": "US-Treasury-yields",
+    "method_id": "Treasury-CMT-v2",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "FGI": {
+    "publisher": "CNN",
+    "upstream_group": "CNN-FGI",
+    "method_id": "CNN-FGI-daily-v1",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "QQQ": {
+    "publisher": "exchange / issuer",
+    "upstream_group": "unknown",
+    "method_id": "vendor-market-close-v1",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "VTV": {
+    "publisher": "exchange / issuer",
+    "upstream_group": "unknown",
+    "method_id": "vendor-market-close-v1",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "CGDV": {
+    "publisher": "exchange / issuer",
+    "upstream_group": "unknown",
+    "method_id": "vendor-market-close-v1",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "KO": {
+    "publisher": "exchange / issuer",
+    "upstream_group": "unknown",
+    "method_id": "vendor-market-close-v1",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "GOLD": {
+    "publisher": "exchange / issuer",
+    "upstream_group": "unknown",
+    "method_id": "vendor-market-close-v1",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "BRKA": {
+    "publisher": "Berkshire Hathaway / NYSE",
+    "upstream_group": "Berkshire Hathaway / NYSE",
+    "method_id": "BRK.A-Class-A-daily-close",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  },
+  "RUT": {
+    "publisher": "FTSE Russell",
+    "upstream_group": "FTSE Russell",
+    "method_id": "Russell-2000-price-index-daily-close",
+    "frequency": "daily",
+    "usage_scope": "local_research",
+    "redistribution": "not_verified"
+  }
+}
